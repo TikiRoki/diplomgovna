@@ -8,9 +8,9 @@ const Carousel = ({ images }) => {
     const timeOut = setTimeout(() => {
       console.log(currentIndex);
       setCurrentIndex((currentIndex + 1) % images.length);
-    }, 3500);
+    }, 4000);
 
-    // return () => clearTimeout(timeOut);
+    return () => clearTimeout(timeOut);
   }, [currentIndex]);
 
   return (
@@ -18,7 +18,7 @@ const Carousel = ({ images }) => {
       {images.map((image, index) => (
         <div
           key={index}
-          className={`absolute w-full h-full inset-0 transition-opacity duration-1000 ease-in-out ${
+          className={`absolute w-full h-full inset-0 transition-opacity duration-[2000ms] ease-in-out ${
             index === currentIndex ? "opacity-100" : "opacity-0"
           }`}
         >

@@ -1,6 +1,6 @@
 import Carousel from "@/components/Carusel";
 
-const images = ["/2.jpg", "/1.jpg", "/3.jpg"];
+const images = ["/2.jpg", "/1.jpg", "/3.jpg", "/5.jpg", "/4.jpg"];
 
 export default function Home() {
   return (
@@ -109,13 +109,21 @@ export default function Home() {
               placeholder="Введите площадь"
             />
           </div>
-          <button
-            type="submit"
-            className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Оценить стоимость
-          </button>
-        </form>
+          <div className="flex justify-center"> 
+        <button
+          type="submit"
+          className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Оценить стоимость
+        </button>
+      </div>
+    </form>
+    {estimatedPrice && (
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold">Результат оценки:</h2>
+            <p className="text-xl text-green-700">{estimatedPrice}</p>
+          </div>
+        )}
       </div>
     </div>
   );
