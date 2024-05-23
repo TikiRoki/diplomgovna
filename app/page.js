@@ -1,18 +1,12 @@
 import Carousel from "@/components/Carusel";
-import Form from "@/components/Form";
-import Image from "next/image";
+
+const images = ["/2.jpg", "/1.jpg", "/3.jpg"];
 
 export default function Home() {
-  const images = [
-    '/1.jpg',
-    '/2.jpg',
-    '/3.jpg',
-    // Добавьте пути к вашим изображениям
-  ];
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-       <Carousel images={images}/> 
-      <div className="bg-gray-200 p-8 rounded-lg shadow-lg w-96">
+      <Carousel images={images} />
+      <div className="bg-gray-200 p-8 rounded-lg shadow-lg w-96 z-10">
         <h1 className="text-2xl font-bold mb-6">Оценка стоимости дома</h1>
         <form>
           <div className="mb-4">
