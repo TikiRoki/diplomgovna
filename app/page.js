@@ -2,7 +2,7 @@
 
 import Carousel from "@/components/Carusel";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const images = ["/2.jpg", "/1.jpg", "/3.jpg", "/5.jpg", "/4.jpg"];
 
@@ -20,10 +20,29 @@ export default function Home() {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    const result = await axios.get("/api/getCost").then((res) => res.data);
+  const getCoordinates = async () => {
+    const res = await axios
+      .get(
+        `https://geocode-maps.yandex.ru/1.x/?apikey=8dc80735-00fd-410b-b3cb-68820c597f08&format=json&geocode=${data.location}`
+      )
+      .then((res) => res.data);
 
-    setCost(result.cost)
+    console.log(res);
+
+    return res.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
+      " "
+    );
+  };
+
+  const handleSubmit = async (e) => {
+    const [longitude, latitude] = await getCoordinates();
+    // const result = await axios
+    //   .get(
+    //     `/api/getCost?floor=${data.floor}&rooms=${data.floor}&area=${data.area}&type=${data.type}&lat=${latitude}&lon=${longitude}`
+    //   )
+    //   .then((res) => res.data);
+
+    // setCost(result.cost);
   };
 
   return (
@@ -47,6 +66,13 @@ export default function Home() {
             value={data.location}
             onChange={handleChange}
           />
+          {/* <button onClick={getCoordinates}>Получить координаты</button>
+          {coordinates && (
+            <div>
+              <p>Широта: {coordinates.latitude}</p>
+              <p>Долгота: {coordinates.longitude}</p>
+            </div>
+          )} */}
         </div>
         <div className="mb-4 relative">
           <label
@@ -150,7 +176,7 @@ export default function Home() {
             Оценить стоимость
           </button>
         </div>
-        {cost && <div>{cost}</div>}
+        {cost && <div className=" ">{cost}</div>}
       </div>
     </div>
   );
