@@ -46,13 +46,16 @@ export default function Home() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center h-screen bg-gray-100 py-16">
       <Carousel images={images} />
-      <div className=" z-50 flex flex-row justify-evenly w-[1000px] relative ">
-        <div className="w-full">
-          <img className="w-full z-50" src="./1.jpg" />
+      <div className=" z-50 flex flex-row w-[1000px] relative h-full my-16 border-8 border-solid border-[] rounded-2xl">
+        <div className="w-full h-full">
+          <img
+            className="object-cover w-full h-full z-50 rounded-l-lg"
+            src="./FON.jpg"
+          />
         </div>
-        <div className="bg-gray-200 p-8 rounded-lg shadow-lg w-96 z-10">
+        <div className="bg-gray-200 p-8 rounded-r-lg shadow-lg w-full z-10">
           <h1 className="text-2xl font-bold mb-6">Оценка стоимости дома</h1>
           <div className="mb-4">
             <label
