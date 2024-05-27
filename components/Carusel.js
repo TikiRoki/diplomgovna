@@ -6,7 +6,6 @@ const Carousel = ({ images }) => {
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      console.log(currentIndex);
       setCurrentIndex((currentIndex + 1) % images.length);
     }, 4000);
 

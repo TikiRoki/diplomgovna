@@ -11,7 +11,7 @@ export default function Home() {
     location: "",
     type: 0,
     floor: 0,
-    rooms: "",
+    rooms: 0,
     area: 0,
   });
   const [cost, setCost] = useState(null);
@@ -36,19 +36,19 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     const [longitude, latitude] = await getCoordinates();
-    // const result = await axios
-    //   .get(
-    //     `/api/getCost?floor=${data.floor}&rooms=${data.floor}&area=${data.area}&type=${data.type}&lat=${latitude}&lon=${longitude}`
-    //   )
-    //   .then((res) => res.data);
+    const result = await axios
+      .get(
+        `/api/getCost?floor=${data.floor}&rooms=${data.rooms}&area=${data.area}&type=${data.type}&lat=${latitude}&lon=${longitude}`
+      )
+      .then((res) => res.data);
 
-    // setCost(result.cost);
+    setCost(result.cost);
   };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <Carousel images={images} />
-      <div className=" z-50 flex flex-row justify-evenly w-[1000px] relative">
+      <div className=" z-50 flex flex-row justify-evenly w-[1000px] relative ">
         <div className="w-full">
           <img className="w-full z-50" src="./1.jpg" />
         </div>
