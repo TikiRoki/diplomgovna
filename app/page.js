@@ -3,7 +3,7 @@
 import Carousel from "@/components/Carusel";
 import axios from "axios";
 import { useState } from "react";
-
+//const [loading, setLoading] = useState(false);
 const images = ["/2.jpg", "/1.jpg", "/3.jpg", "/5.jpg", "/4.jpg"];
 
 export default function Home() {
@@ -36,17 +36,24 @@ export default function Home() {
   };
 
   const handleSubmit = async (e) => {
-    const [longitude, latitude] = await getCoordinates();
-    const result = await axios
-      .get(
-        `/api/getCost?floor=${data.floor}&rooms=${data.rooms}&area=${data.area}&type=${data.type}&lat=${latitude}&lon=${longitude}`
-      )
-      .then((res) => res.data);
-
-    setCost(result.cost);
-    setIsModalOpen(true); // Открыть модальное окно после получения результата
-  };
-
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const [longitude, latitude] = await getCoordinates();
+      const result = await axios
+        .get(
+          `/api/getCost?floor=${data.floor}&rooms=${data.rooms}&area=${data.area}&type=${data.type}&lat=${latitude}&lon=${longitude}`
+        )
+        .then((res) => res.data);
+  
+      setCost(result.cost);
+    } catch (error) {
+      console.error("Error fetching cost:", error);
+    } finally {
+      setLoading(false);
+    }
+  };//Открыть модальное окно 
+  
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -59,12 +66,12 @@ export default function Home() {
       </div>
 
       {/* Overlay for content */}
-      <div className="relative z-10 flex flex-col min-h-screen bg-opacity-60 backdrop-blur-">
+      <div className="relative z-10 flex flex-col min-h-screen bg-opacity-60 backdrop-blur-sm">
         {/* Header */}
         <header className="bg-gray-800 text-white py-4">
           <div className="container mx-auto flex justify-between items-center">
             <div className="text-2xl font-bold">
-              <img src="/LOGO.png" alt="Logo" className="h-10 w-100 inline-block" />
+              <img src="/LOGO.png" alt="Logo" className="h-10 w-30 inline-block" />
             </div>
             <nav>
               <ul className="flex space-x-4">
