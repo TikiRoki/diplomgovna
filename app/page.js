@@ -2,11 +2,11 @@
 
 import Carousel from "@/components/Carusel";
 import axios from "axios";
-import { useState } from "react";
-//const [loading, setLoading] = useState(false);
+import React, { useState } from "react";
 const images = ["/2.jpg", "/1.jpg", "/3.jpg", "/5.jpg", "/4.jpg"];
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     location: "",
     type: 0,
@@ -45,17 +45,18 @@ export default function Home() {
           `/api/getCost?floor=${data.floor}&rooms=${data.rooms}&area=${data.area}&type=${data.type}&lat=${latitude}&lon=${longitude}`
         )
         .then((res) => res.data);
-  
+      setLoading(true);
       setCost(result.cost);
+      setIsModalOpen(true);
     } catch (error) {
-      console.error("Error fetching cost:", error);
+      console.error("Ошибка при получении координат:", error);
     } finally {
-      setLoading(false);
     }
-  };//Открыть модальное окно 
-  
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
+    setLoading(false);
   };
 
   return (
@@ -71,18 +72,28 @@ export default function Home() {
         <header className="bg-gray-800 text-white py-4">
           <div className="container mx-auto flex justify-between items-center">
             <div className="text-2xl font-bold">
-              <img src="/LOGO.png" alt="Logo" className="h-10 w-30 inline-block" />
+              <img
+                src="/LOGO.png"
+                alt="Logo"
+                className="h-10 w-30 inline-block"
+              />
             </div>
             <nav>
               <ul className="flex space-x-4">
                 <li>
-                  <a href="#" className="hover:underline">Главная</a>
+                  <a href="#" className="hover:underline">
+                    Главная
+                  </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">О нас</a>
+                  <a href="#" className="hover:underline">
+                    О нас
+                  </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">Контакты</a>
+                  <a href="#" className="hover:underline">
+                    Контакты
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -102,7 +113,9 @@ export default function Home() {
                   />
                 </div>
                 <div className="w-full md:w-1/2 p-8">
-                  <h1 className="text-2xl font-bold mb-6">Оценка стоимости жилья</h1>
+                  <h1 className="text-2xl font-bold mb-6">
+                    Оценка стоимости жилья
+                  </h1>
                   <div className="mb-4">
                     <label
                       className="block text-gray-700 text-sm font-bold mb-2"
@@ -222,10 +235,17 @@ export default function Home() {
                       Оценить стоимость
                     </button>
                   </div>
+                  {loading && (
+                    <div className="fixed top-0 left-0 z-50 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+                      <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+                    </div>
+                  )}
                   {isModalOpen && (
                     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                       <div className="bg-white p-8 rounded-lg shadow-lg w-80">
-                        <h2 className="text-xl font-bold mb-4">Примерная стоимость жилья</h2>
+                        <h2 className="text-xl font-bold mb-4">
+                          Примерная стоимость жилья:{" "}
+                        </h2>
                         <p className="mb-6">{cost} рублей</p>
                         <button
                           className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -245,7 +265,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="bg-gray-800 text-white py-4">
           <div className="container mx-auto text-center">
-            <p>&copy; 2024 Ваш сайт. Все права защищены.</p>
+            <p>&copy; 2024 ONLINEPRICE. Все права защищены.</p>
           </div>
         </footer>
       </div>
